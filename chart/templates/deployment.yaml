@@ -41,16 +41,18 @@ spec:
           env:
             - name: ANKRA_URL
               value: {{ .Values.config.ankra_url | quote }}
+            {{- if or .Values.config.existing_secret_name .Values.config.token }}
             - name: TOKEN
               valueFrom:
                 secretKeyRef:
                 {{- if .Values.config.existing_secret_name }}
                   name: {{ .Values.config.existing_secret_name }}
                   key: {{ .Values.config.secret_key }}
-                {{- else if .Values.config.token }}
+                {{- else }}
                   name: "ankra-identity-secret"
                   key: "TOKEN"
                 {{- end }}
+            {{- end }}
             - name: LOG_LEVEL
               value: {{ .Values.log_level | quote }}
             - name: NATS_WORKER_MAX_WORKERS
