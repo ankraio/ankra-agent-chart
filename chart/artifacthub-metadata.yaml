@@ -5,26 +5,73 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/operator: "false"
   artifacthub.io/containsSecurityUpdates: "false"
+  artifacthub.io/alternativeName: "Ankra Kubernetes Agent"
+  artifacthub.io/displayName: "Ankra Agent"
   artifacthub.io/changes: |
     - kind: added
       description: Initial public release of the Ankra Agent Helm Chart
     - kind: added
-      description: Support for configuring agent via values
+      description: Python-based scheduler agent for task automation
+    - kind: added
+      description: Support for configuring agent via values with secure token management
     - kind: added
       description: RBAC resources (ClusterRole, ClusterRoleBinding, ServiceAccount)
-  artifacthub.io/signKey: |
-    fingerprint: # Add GPG fingerprint if you sign your charts
-    url: # Add URL to public key if available
+    - kind: added
+      description: Health checks (liveness, readiness, startup probes)
+    - kind: added
+      description: Configurable resource limits and requests optimized for Python workloads
+    - kind: added
+      description: Support for high availability with pod anti-affinity
+    - kind: added
+      description: Integration with Prometheus for metrics collection
+  artifacthub.io/crds: ""
+  artifacthub.io/crdsExamples: ""
+  artifacthub.io/install: |
+    ## Quick Installation
+    
+    Install the Ankra Agent directly from the OCI registry:
+    
+    ```bash
+    helm upgrade \
+      --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
+      --version 1.0.232 \
+      --set config.ankra_url=https://platform.ankra.app \
+      --set config.token=your-ankra-token-here \
+      --namespace=ankra \
+      --create-namespace
+    ```
+    
+    ## Get Your Token
+    
+    1. Sign up at [https://platform.ankra.app](https://platform.ankra.app)
+    2. Create a new cluster connection
+    3. Copy your agent token
+    4. Use it in the installation command above
   artifacthub.io/links: |
+    - name: Website
+      url: https://ankra.io
+    - name: Platform
+      url: https://platform.ankra.app
     - name: Documentation
       url: https://docs.ankra.io
     - name: Support
       url: https://github.com/ankraio/ankra-agent-chart/issues
+    - name: Source Code
+      url: https://github.com/ankraio/ankra-agent-chart
   artifacthub.io/maintainers: |
-    - name: Ankra
+    - name: Ankra Team
       email: hello@ankra.io
+      url: https://ankra.io
+  artifacthub.io/keywords: |
+    - kubernetes
+    - agent
+    - monitoring
+    - automation
+    - management
+    - cloud-native
+    - devops
+    - observability
+    - cluster-management
+    - python
   artifacthub.io/recommendations: |
-    - url: https://artifacthub.io/packages/helm/ankra/ankra-agent
-  artifacthub.io/screenshots: |
-    - title: Agent Dashboard
-      url: # Add screenshot URL if available
+    - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack

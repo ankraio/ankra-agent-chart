@@ -1,15 +1,27 @@
 # Ankra Agent
 
-The Ankra Agent enables seamless integration between your Kubernetes clusters and the Ankra platform, providing monitoring, management, and automation capabilities for your cloud-native infrastructure.
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![AppVersion: 1.0.232](https://img.shields.io/badge/AppVersion-1.0.232-informational?style=flat-square)
+
+The Ankra Agent is a Kubernetes agent that enables seamless integration between your Kubernetes clusters and the Ankra platform, providing monitoring, management, and automation capabilities for your cloud-native infrastructure.
+
+## Overview
+
+Ankra Agent is designed to run inside your Kubernetes cluster and acts as a bridge between your infrastructure and the Ankra platform. It's built for reliable scheduling and task execution, optimized for low resource consumption while maintaining high performance.
 
 ## Features
 
-- 🔄 **Real-time Monitoring**: Continuous cluster health and resource monitoring
-- 🛡️ **Secure Communication**: End-to-end encrypted connection to Ankra platform
-- 🎯 **Smart Scheduling**: Python-based scheduler for efficient task execution
-- 📊 **Resource Management**: Optimized resource usage with configurable limits
-- 🔐 **RBAC Ready**: Built-in ClusterRole and ServiceAccount configuration
-- 🚀 **Easy Deployment**: Simple Helm installation with minimal configuration
+- 🔄 **Real-time Monitoring**: Continuous cluster health and resource monitoring with built-in metrics collection
+- 🛡️ **Secure Communication**: End-to-end encrypted connection to Ankra platform via HTTPS with token-based authentication
+- 🎯 **Smart Scheduling**: NATS-powered scheduler for efficient task execution with configurable worker pools
+- 📊 **Resource Management**: Optimized CPU and memory usage with configurable limits suitable for production workloads
+- 🔐 **RBAC Ready**: Built-in ClusterRole and ServiceAccount configuration with least-privilege access
+- 🚀 **Easy Deployment**: Simple Helm installation with minimal configuration via OCI registry
+- ❤️ **Health Checks**: Comprehensive liveness, readiness, and startup probes for reliability
+- 🔄 **High Availability**: Support for multiple replicas with pod anti-affinity and disruption budgets
+- 📈 **Prometheus Integration**: Built-in metrics endpoint for observability
+- 🐍 **Python Optimized**: Environment variables and settings optimized for Python runtime performance
 
 ## Quick Start
 
