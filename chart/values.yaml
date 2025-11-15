@@ -15,7 +15,7 @@ config:
 
 replica_count: 1
 
-topologySpreadConstraints: [ ]
+topologySpreadConstraints: []
 
 # @param terminationGracePeriodSeconds: The time to wait before forcefully terminating the agent.
 # This should not be set to low as it may cause the agent to not finish its work.
@@ -26,22 +26,22 @@ image:
   # Pull policy for the image.
   pull_policy: Always
   # Which secret to use for pulling images.
-  pull_secrets: [ ]
+  pull_secrets: []
   # The stable tag is used to deploy the latest stable version of the agent.
   tag: "stable"
 
 service_account:
   # Annotations to add to the service account
-  annotations: { }
+  annotations: {}
   # The name of the service account to use.
   name: "ankra-agent-sa"
 
-pod_annotations: { }
+pod_annotations: {}
 
-pod_security_context: { }
+pod_security_context: {}
 # fsGroup: 2000
 
-security_context: { }
+security_context: {}
 # capabilities:
 #   drop:
 #   - ALL
@@ -54,7 +54,7 @@ service:
   port: 8080
   name: http
   node_port: ""
-  annotations: { }
+  annotations: {}
 
 resources:
   limits:
@@ -62,10 +62,10 @@ resources:
   requests:
     memory: 100Mi
 
-node_selector: { }
+node_selector: {}
 
-tolerations: [ ]
+tolerations: []
 
-affinity: { }
+affinity: {}
 
-extra_env: [ ]
+extra_env: []
