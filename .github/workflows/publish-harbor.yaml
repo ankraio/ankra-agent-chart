@@ -1,0 +1,51 @@
+name: Build and Push to Harbor
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          else
+            VERSION="$(grep '^version:' chart/Chart.yaml | awk '{print $2}')"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Chart version: $VERSION"
+
+      - name: Package Helm Chart
+        run: |
+          helm package chart/ --version ${{ steps.version.outputs.version }}
+
+      - name: Login to Harbor
+        run: |
+          echo "${{ secrets.HARBOR_PASSWORD }}" | helm registry login registry.ankra.cloud \
+            --username "${{ secrets.HARBOR_USERNAME }}" \
+            --password-stdin
+
+      - name: Push Chart to Harbor
+        run: |
+          helm push ankra-agent-${{ steps.version.outputs.version }}.tgz oci://registry.ankra.cloud/ankra
+
+      - name: Logout from Harbor
+        if: always()
+        run: |
+          helm registry logout registry.ankra.cloud
