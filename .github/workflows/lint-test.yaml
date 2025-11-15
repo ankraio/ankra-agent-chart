@@ -10,6 +10,7 @@ on:
       - main
     paths:
       - 'chart/**'
+  workflow_dispatch:
 
 jobs:
   lint-test:
