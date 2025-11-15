@@ -31,6 +31,21 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Chart version: $VERSION"
 
+      - name: Validate Harbor credentials
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+        run: |
+          if [ -z "$HARBOR_USERNAME" ]; then
+            echo "Error: HARBOR_USERNAME secret is not set"
+            exit 1
+          fi
+          if [ -z "$HARBOR_PASSWORD" ]; then
+            echo "Error: HARBOR_PASSWORD secret is not set"
+            exit 1
+          fi
+          echo "Harbor credentials validated"
+
       - name: Package Helm Chart
         run: |
           helm package chart/ --version ${{ steps.version.outputs.version }}
