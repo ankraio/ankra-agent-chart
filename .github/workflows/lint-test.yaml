@@ -40,6 +40,8 @@ jobs:
         uses: helm/kind-action@v1.9.0
 
       - name: Run chart-testing (install)
+        env:
+          ANKRA_AGENT_TOKEN: ${{ secrets.ANKRA_AGENT_TOKEN }}
         run: |
           ct install --target-branch main --config .ct.yaml \
-            --helm-extra-set-args "--set=config.token=test-token-for-ci"
+            --helm-extra-set-args "--set=config.token=$ANKRA_AGENT_TOKEN"
