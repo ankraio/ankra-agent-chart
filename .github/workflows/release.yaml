@@ -45,14 +45,18 @@ jobs:
       - name: Update Helm Repository Index
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
-
-          # Checkout gh-pages branch
-          git fetch origin gh-pages:gh-pages 2>/dev/null || git checkout --orphan gh-pages
-          git checkout gh-pages
-
-          # Clean working directory but keep .git
-          git rm -rf . 2>/dev/null || true
-
+          
+          # Try to fetch gh-pages branch, if it doesn't exist, create it
+          if git ls-remote --heads origin gh-pages | grep gh-pages; then
+            echo "gh-pages branch exists, fetching it"
+            git fetch origin gh-pages
+            git checkout gh-pages
+          else
+            echo "gh-pages branch doesn't exist, creating it"
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+          
           # Download existing index or create new one
           if curl -sL https://ankraio.github.io/ankra-agent-chart/index.yaml -o index.yaml 2>/dev/null && [ -s index.yaml ]; then
             echo "Found existing index.yaml"
@@ -63,17 +67,11 @@ jobs:
           entries: {}
           EOF
           fi
-
-          # Copy packaged chart
-          cp ../.cr-release-packages/*.tgz . 2>/dev/null || true
-
-          # Generate new index
+          
+          # Generate new index with the chart from the release
           helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml
-
-          # Remove the .tgz file (it's in the release)
-          rm -f *.tgz
-
+          
           # Commit and push
           git add index.yaml
-          git commit -m "Update Helm repository index for $TAG_NAME" || echo "No changes to commit"
-          git push origin gh-pages
+          git commit -m "Update Helm repository index for $TAG_NAME"
+          git push -f origin gh-pages
