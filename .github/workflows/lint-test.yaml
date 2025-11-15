@@ -44,5 +44,9 @@ jobs:
         env:
           ANKRA_AGENT_TOKEN: ${{ secrets.ANKRA_AGENT_TOKEN }}
         run: |
+          if [ -z "$ANKRA_AGENT_TOKEN" ]; then
+            echo "Error: ANKRA_AGENT_TOKEN secret is not set"
+            exit 1
+          fi
           ct install --target-branch main --config .ct.yaml \
-            --helm-extra-set-args "--set=config.token=$ANKRA_AGENT_TOKEN"
+            --helm-extra-set-args "--set config.token=$ANKRA_AGENT_TOKEN"
