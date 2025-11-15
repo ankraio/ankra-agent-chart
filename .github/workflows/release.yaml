@@ -60,16 +60,16 @@ jobs:
           # Download existing index or create new one
           if curl -sL https://ankraio.github.io/ankra-agent-chart/index.yaml -o index.yaml 2>/dev/null && [ -s index.yaml ]; then
             echo "Found existing index.yaml"
+            # Validate the YAML file
+            if ! helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml 2>/dev/null; then
+              echo "Existing index.yaml is invalid, recreating from scratch"
+              rm -f index.yaml
+              helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
+            fi
           else
             echo "Creating new index.yaml"
-            cat > index.yaml <<EOF
-          apiVersion: v1
-          entries: {}
-          EOF
+            helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
           fi
-          
-          # Generate new index with the chart from the release
-          helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml
           
           # Commit and push
           git add index.yaml
