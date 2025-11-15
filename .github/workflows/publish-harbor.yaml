@@ -51,14 +51,31 @@ jobs:
           helm package chart/ --version ${{ steps.version.outputs.version }}
 
       - name: Login to Harbor
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
         run: |
-          echo "${{ secrets.HARBOR_PASSWORD }}" | helm registry login registry.ankra.cloud \
-            --username "${{ secrets.HARBOR_USERNAME }}" \
+          echo "Attempting to login to registry.ankra.cloud as user: $HARBOR_USERNAME"
+          echo "$HARBOR_PASSWORD" | helm registry login registry.ankra.cloud \
+            --username "$HARBOR_USERNAME" \
             --password-stdin
+          if [ $? -eq 0 ]; then
+            echo "Successfully logged in to Harbor registry"
+          else
+            echo "Failed to login to Harbor registry"
+            exit 1
+          fi
 
       - name: Push Chart to Harbor
         run: |
+          echo "Pushing chart: ankra-agent-${{ steps.version.outputs.version }}.tgz"
           helm push ankra-agent-${{ steps.version.outputs.version }}.tgz oci://registry.ankra.cloud/ankra
+          if [ $? -eq 0 ]; then
+            echo "Successfully pushed chart to Harbor"
+          else
+            echo "Failed to push chart to Harbor"
+            exit 1
+          fi
 
       - name: Logout from Harbor
         if: always()
