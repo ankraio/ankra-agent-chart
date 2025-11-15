@@ -33,6 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service definition
 - Helm helpers and templates
 
-[Unreleased]: https://github.com/ankra-io/ankra-agent-chart/compare/v1.0.232...HEAD
-[1.0.232]: https://github.com/ankra-io/ankra-agent-chart/compare/v0.0.1...v1.0.232
-[0.0.1]: https://github.com/ankra-io/ankra-agent-chart/releases/tag/v0.0.1
+[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.232...HEAD
+[1.0.232]: https://github.com/ankraio/ankra-agent-chart/compare/v0.0.1...v1.0.232
+[0.0.1]: https://github.com/ankraio/ankra-agent-chart/releases/tag/v0.0.1
