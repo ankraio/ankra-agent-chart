@@ -45,10 +45,10 @@ jobs:
       - name: Update Helm Repository Index
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
-          
+
           # Go back to main branch
           git checkout main
-          
+
           # Check if index.yaml exists and merge, otherwise create new
           if [ -f index.yaml ]; then
             echo "Found existing index.yaml, merging"
@@ -57,7 +57,7 @@ jobs:
             echo "Creating new index.yaml"
             helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
           fi
-          
+
           # Commit and push to main
           git add index.yaml
           git commit -m "chore: update Helm repository index for $TAG_NAME [skip ci]"
