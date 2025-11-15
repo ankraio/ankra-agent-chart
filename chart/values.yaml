@@ -27,8 +27,8 @@ image:
   pull_policy: Always
   # Which secret to use for pulling images.
   pull_secrets: []
-  # The stable tag is used to deploy the latest stable version of the agent.
-  tag: "stable"
+  # Image tag - leave empty to use Chart.AppVersion, or override with specific tag like "latest"
+  tag: "latest"
 
 service_account:
   # Annotations to add to the service account
