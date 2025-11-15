@@ -2,7 +2,7 @@ apiVersion: v2
 name: ankra-agent
 description: Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform
 type: application
-version: 1.0.3
+version: 1.0.232
 appVersion: 1.0.232
 
 keywords:
