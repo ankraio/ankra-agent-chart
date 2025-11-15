@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   ankra-agent:
   - apiVersion: v2
+    appVersion: 1.0.232
+    created: "2025-11-15T21:21:54.178732607Z"
+    description: A Helm chart for the Ankra agent.
+    digest: 2ff6a045dfdc7998bd5b7b135ffa9c766934810ed53771ff15bbfab7f0f14457
+    maintainers:
+    - email: hello@ankra.io
+      name: Ankra
+    name: ankra-agent
+    type: application
+    urls:
+    - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2025-11-15T21:19:49.462131104Z"
     description: A Helm chart for the Ankra agent.
@@ -14,4 +27,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-15T21:19:49.461586967Z"
+generated: "2025-11-15T21:21:54.178254484Z"
