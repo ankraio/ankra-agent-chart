@@ -2,15 +2,15 @@ name: Release Chart
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'chart/**'
+    tags:
+      - 'v*.*.*'
 
 jobs:
   release:
     permissions:
       contents: write
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,10 +28,35 @@ jobs:
         with:
           version: v3.14.0
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: .
-          charts_repo_url: https://ankra-io.github.io/ankra-agent-chart
+      - name: Package Helm Chart
+        run: |
+          helm package chart/ -d .cr-release-packages
+
+      - name: Create GitHub Release
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          gh release create "$TAG_NAME" \
+            .cr-release-packages/*.tgz \
+            --title "Release $TAG_NAME" \
+            --notes "Release $TAG_NAME of ankra-agent Helm chart"
+
+      - name: Update Helm Repository Index
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+          # Create or update gh-pages branch
+          git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+
+          # Download existing index if it exists
+          curl -sL https://ankraio.github.io/ankra-agent-chart/index.yaml -o index.yaml 2>/dev/null || echo "apiVersion: v1" > index.yaml
+
+          # Generate new index
+          helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/${GITHUB_REF#refs/tags/} --merge index.yaml
+
+          # Commit and push
+          git add index.yaml
+          git commit -m "Update Helm repository index for ${GITHUB_REF#refs/tags/}"
+          git push origin gh-pages

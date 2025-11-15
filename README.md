@@ -8,7 +8,7 @@ The Ankra Agent enables seamless integration between your Kubernetes clusters an
 
 ## Prerequisites
 
-- Kubernetes 1.19+
+- Kubernetes 1.31+
 - Helm 3.0+
 - An Ankra account with an agent token (sign up at [https://platform.ankra.app](https://platform.ankra.app))
 
