@@ -46,32 +46,19 @@ jobs:
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           
-          # Try to fetch gh-pages branch, if it doesn't exist, create it
-          if git ls-remote --heads origin gh-pages | grep gh-pages; then
-            echo "gh-pages branch exists, fetching it"
-            git fetch origin gh-pages
-            git checkout gh-pages
-          else
-            echo "gh-pages branch doesn't exist, creating it"
-            git checkout --orphan gh-pages
-            git rm -rf .
-          fi
+          # Go back to main branch
+          git checkout main
           
-          # Download existing index or create new one
-          if curl -sL https://ankraio.github.io/ankra-agent-chart/index.yaml -o index.yaml 2>/dev/null && [ -s index.yaml ]; then
-            echo "Found existing index.yaml"
-            # Validate the YAML file
-            if ! helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml 2>/dev/null; then
-              echo "Existing index.yaml is invalid, recreating from scratch"
-              rm -f index.yaml
-              helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
-            fi
+          # Check if index.yaml exists and merge, otherwise create new
+          if [ -f index.yaml ]; then
+            echo "Found existing index.yaml, merging"
+            helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml
           else
             echo "Creating new index.yaml"
             helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
           fi
           
-          # Commit and push
+          # Commit and push to main
           git add index.yaml
-          git commit -m "Update Helm repository index for $TAG_NAME"
-          git push -f origin gh-pages
+          git commit -m "chore: update Helm repository index for $TAG_NAME [skip ci]"
+          git push origin main

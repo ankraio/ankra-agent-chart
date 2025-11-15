@@ -19,7 +19,7 @@ The Ankra Agent enables seamless integration between your Kubernetes clusters an
 1. Add the Ankra Helm repository:
 
 ```bash
-helm repo add ankra https://ankra-io.github.io/ankra-agent-chart
+helm repo add ankra https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main
 helm repo update
 ```
 
@@ -42,7 +42,7 @@ helm install ankra-agent ankra/ankra-agent \
 Clone this repository and install directly:
 
 ```bash
-git clone https://github.com/ankra-io/ankra-agent-chart.git
+git clone https://github.com/ankraio/ankra-agent-chart.git
 cd ankra-agent-chart
 helm install ankra-agent ./chart \
   --namespace ankra-system \
@@ -194,7 +194,7 @@ kubectl logs -n ankra-system -l app.kubernetes.io/name=ankra-agent
 ## Support
 
 - Documentation: [https://docs.ankra.io](https://docs.ankra.io)
-- Issues: [GitHub Issues](https://github.com/ankra-io/ankra-agent-chart/issues)
+- Issues: [GitHub Issues](https://github.com/ankraio/ankra-agent-chart/issues)
 - Email: hello@ankra.io
 
 ## License
