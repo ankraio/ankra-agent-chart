@@ -28,9 +28,9 @@ annotations:
   artifacthub.io/crdsExamples: ""
   artifacthub.io/install: |
     ## Quick Installation
-    
+
     Install the Ankra Agent directly from the OCI registry:
-    
+
     ```bash
     helm upgrade \
       --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
@@ -40,9 +40,9 @@ annotations:
       --namespace=ankra \
       --create-namespace
     ```
-    
+
     ## Get Your Token
-    
+
     1. Sign up at [https://platform.ankra.app](https://platform.ankra.app)
     2. Create a new cluster connection
     3. Copy your agent token
