@@ -46,16 +46,16 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          
+
           # Create or update gh-pages branch
           git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
-          
+
           # Download existing index if it exists
           curl -sL https://ankraio.github.io/ankra-agent-chart/index.yaml -o index.yaml 2>/dev/null || echo "apiVersion: v1" > index.yaml
-          
+
           # Generate new index
           helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/${GITHUB_REF#refs/tags/} --merge index.yaml
-          
+
           # Commit and push
           git add index.yaml
           git commit -m "Update Helm repository index for ${GITHUB_REF#refs/tags/}"
