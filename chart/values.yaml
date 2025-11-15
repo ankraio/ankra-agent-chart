@@ -28,7 +28,7 @@ image:
   # Which secret to use for pulling images.
   pull_secrets: []
   # Image tag - leave empty to use Chart.AppVersion, or override with specific tag like "latest"
-  tag: "latest"
+  tag: ""
 
 service_account:
   # Annotations to add to the service account
