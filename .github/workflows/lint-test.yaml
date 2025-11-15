@@ -38,7 +38,7 @@ jobs:
         run: ct lint --target-branch main --config .ct.yaml
 
   smoke-test-kind:
-    name: Smoke test - Kind Cluster
+    name: Live Test - Kind Cluster
     runs-on: ubuntu-latest
     needs: lint
     steps:
