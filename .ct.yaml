@@ -1,0 +1,10 @@
+---
+# Configuration for chart-testing
+chart-dirs:
+  - .
+
+charts:
+  - chart
+
+validate-maintainers: false
+check-version-increment: false

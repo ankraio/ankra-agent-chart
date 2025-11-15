@@ -68,5 +68,4 @@ tolerations: [ ]
 
 affinity: { }
 
-
 extra_env: [ ]
