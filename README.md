@@ -1,5 +1,7 @@
 # Ankra Agent Helm Chart
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/ankra-agent)](https://artifacthub.io/packages/search?repo=ankra-agent)
+
 Official Helm chart for deploying the Ankra Agent to Kubernetes clusters.
 
 ## Overview

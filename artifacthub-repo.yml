@@ -1,5 +1,5 @@
 # Artifact Hub Repository Configuration
-repositoryID: # Will be assigned by Artifact Hub after claiming
+repositoryID: f87a9671-1964-4c54-8e72-f0daffe7c849
 owners:
   - name: Ankra
     email: hello@ankra.io
