@@ -5,6 +5,24 @@ type: application
 version: 1.0.3
 appVersion: 1.0.232
 
+keywords:
+  - kubernetes
+  - agent
+  - monitoring
+  - automation
+  - management
+
+home: https://ankra.io
+sources:
+  - https://github.com/ankraio/ankra-agent-chart
+
 maintainers:
   - email: hello@ankra.io
     name: Ankra
+    url: https://ankra.io
+
+icon: https://avatars.githubusercontent.com/u/yourusername?s=200&v=4
+
+annotations:
+  artifacthub.io/category: integration-delivery
+  artifacthub.io/license: Apache-2.0
