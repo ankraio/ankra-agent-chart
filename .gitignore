@@ -1,0 +1,47 @@
+# Helm chart artifacts
+*.tgz
+*.lock
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+.*.swp
+
+# Test coverage and reports
+coverage/
+*.coverage
+htmlcov/
+.pytest_cache/
+
+# CI/CD artifacts
+.github/workflows/*.log
+
+# Sensitive data - never commit!
+secrets/
+*.secret
+*.pem
+*.key
+*.crt
+kubeconfig
+*-secrets.yaml
+
+# Local development
+.env
+.env.local
+*.local
+
+# Helm unittest plugin output
+__snapshot__/
+
+# Distribution
+dist/
+build/

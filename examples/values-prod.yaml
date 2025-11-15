@@ -1,0 +1,47 @@
+# Production Environment Example
+
+log_level: "INFO"
+replica_count: 2
+terminationGracePeriodSeconds: 900
+nats_worker_max_workers: 20
+
+config:
+  ankra_url: "https://platform.ankra.app"
+  # Use existing secret for production
+  existing_secret_name: "ankra-token"
+  secret_key: "token"
+
+resources:
+  limits:
+    memory: 400Mi
+  requests:
+    memory: 200Mi
+
+# High availability configuration
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - ankra-agent
+        topologyKey: kubernetes.io/hostname
+
+# Spread across zones if available
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: ankra-agent
+
+# Add monitoring annotations
+pod_annotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8080"
+  prometheus.io/path: "/metrics"

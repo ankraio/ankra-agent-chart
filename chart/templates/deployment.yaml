@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ankra-agent.fullname" . }}
+  labels:
+    {{- include "ankra-agent.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replica_count }}
+  selector:
+    matchLabels:
+      {{- include "ankra-agent.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        {{- include "ankra-agent.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{- with .Values.pod_annotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        deploymentTimestamp: "{{ now | unixEpoch }}"
+    spec:
+      {{- if .Values.image.pull_secrets }}
+      imagePullSecrets:
+          {{- toYaml .Values.image.pull_secrets | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ankra-agent.service_accountName" . }}
+      securityContext:
+        {{- toYaml .Values.pod_security_context | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.security_context | nindent 12 }}
+          image: {{ .Values.image.repository }}:{{ .Chart.Version }}
+          imagePullPolicy: {{ .Values.image.pull_policy }}
+          ports:
+            - name: {{ .Values.service.name }}
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: ANKRA_URL
+              value: {{ .Values.config.ankra_url | quote }}
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.config.existing_secret_name }}
+                  name: {{ .Values.config.existing_secret_name }}
+                  key: {{ .Values.config.secret_key }}
+                {{- else if .Values.config.token }}
+                  name: "ankra-identity-secret"
+                  key: "TOKEN"
+                {{- end }}
+            - name: LOG_LEVEL
+              value: {{ .Values.log_level | quote }}
+            - name: NATS_WORKER_MAX_WORKERS
+              value: {{ .Values.nats_worker_max_workers | quote }}
+            - name: AGENT_VERSION
+              value: {{ .Chart.Version | quote }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.node_selector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

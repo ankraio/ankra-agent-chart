@@ -1,0 +1,7 @@
+
+Ankra Agent has been installed / upgraded!
+---
+Release Name: {{ .Release.Name }}
+Release Namespace {{ .Release.Namespace }}
+Release Version: {{ .Chart.Version }}
+Release Revision: {{ .Release.Revision }}

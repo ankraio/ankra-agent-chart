@@ -1,0 +1,19 @@
+# Development Environment Example
+
+log_level: "DEBUG"
+replica_count: 1
+
+config:
+  ankra_url: "https://platform.ankra.app"
+  token: "" # Add your development token here
+
+resources:
+  limits:
+    memory: 150Mi
+  requests:
+    memory: 75Mi
+
+# Enable debug logging
+extra_env:
+  - name: DEBUG
+    value: "true"

@@ -1,0 +1,72 @@
+# Default values for ankra-agent.
+
+# @param log_level: The log level for the agent.
+# Allowed values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+log_level: "INFO"
+
+# @param nats_worker_max_workers: Maximum number of NATS worker threads for processing commands
+nats_worker_max_workers: 15
+
+config:
+  ankra_url: "https://platform.ankra.app"
+  token: ""
+  existing_secret_name: ""
+  secret_key: ""
+
+replica_count: 1
+
+topologySpreadConstraints: [ ]
+
+# @param terminationGracePeriodSeconds: The time to wait before forcefully terminating the agent.
+# This should not be set to low as it may cause the agent to not finish its work.
+terminationGracePeriodSeconds: 600
+
+image:
+  repository: registry.ankra.cloud/ankra/agent
+  # Pull policy for the image.
+  pull_policy: Always
+  # Which secret to use for pulling images.
+  pull_secrets: [ ]
+  # The stable tag is used to deploy the latest stable version of the agent.
+  tag: "stable"
+
+service_account:
+  # Annotations to add to the service account
+  annotations: { }
+  # The name of the service account to use.
+  name: "ankra-agent-sa"
+
+pod_annotations: { }
+
+pod_security_context: { }
+# fsGroup: 2000
+
+security_context: { }
+  # capabilities:
+  #   drop:
+  #   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+  name: http
+  node_port: ""
+  annotations: { }
+
+resources:
+  limits:
+    memory: 200Mi
+  requests:
+    memory: 100Mi
+
+node_selector: { }
+
+tolerations: [ ]
+
+affinity: { }
+
+
+extra_env: [ ]
