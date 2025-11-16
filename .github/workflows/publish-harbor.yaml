@@ -51,16 +51,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           # Checkout main branch (we're in detached HEAD from tag checkout)
           git fetch origin main
           git checkout main
-          
+
           # Apply the version changes
           VERSION="${{ steps.version.outputs.version }}"
           sed -i "s/^version:.*/version: $VERSION/" chart/Chart.yaml
           sed -i "s/^appVersion:.*/appVersion: $VERSION/" chart/Chart.yaml
-          
+
           # Commit and push if there are changes
           git add chart/Chart.yaml
           if git diff --staged --quiet; then
@@ -69,7 +69,7 @@ jobs:
             git commit -m "chore: update Chart.yaml to version $VERSION [skip ci]"
             git push origin main
           fi
-          
+
           # Return to the tag for packaging
           git checkout -
 
