@@ -27,7 +27,7 @@ maintainers:
     email: hello@ankra.io
     url: https://ankra.io
 
-icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/.github/icon.jpeg
+icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
 
 annotations:
   artifacthub.io/category: integration-delivery
