@@ -11,10 +11,10 @@ entries:
       org.opencontainers.image.documentation: https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md
     apiVersion: v2
     appVersion: 1.0.232
-    created: "2025-11-16T10:29:31.906740005Z"
+    created: "2025-11-16T10:54:54.649501126Z"
     description: Kubernetes agent for seamless cluster integration, monitoring, and
       automation with the Ankra platform
-    digest: b6b80fa319d70d5371cae36488338d6743c34c99c96cb4aea0ba731d8ad02834
+    digest: e3d26ae769f070e16b5fccfc2cf89835a149858c1babcf6f36bd747f02fbe302
     home: https://ankra.io
     icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
     keywords:
@@ -89,4 +89,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-16T10:29:31.906111931Z"
+generated: "2025-11-16T10:54:54.648849447Z"
