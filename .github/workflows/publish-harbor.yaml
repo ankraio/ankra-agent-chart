@@ -144,6 +144,21 @@ jobs:
             echo "Warning: Failed to attach README, but chart was pushed successfully"
           fi
 
+      - name: Tag and push stable version
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "Pulling chart version $VERSION"
+          helm pull oci://registry.ankra.cloud/ankra/ankra-agent --version $VERSION
+
+          echo "Re-pushing as stable tag"
+          helm push ankra-agent-$VERSION.tgz oci://registry.ankra.cloud/ankra --version stable
+
+          if [ $? -eq 0 ]; then
+            echo "Successfully pushed stable tag"
+          else
+            echo "Warning: Failed to push stable tag"
+          fi
+
       - name: Logout from Harbor
         if: always()
         run: |
