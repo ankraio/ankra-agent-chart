@@ -112,14 +112,14 @@ jobs:
           echo "$HARBOR_PASSWORD" | oras login registry.ankra.cloud \
             --username "$HARBOR_USERNAME" \
             --password-stdin
-          
+
           echo "Attaching README.md to chart artifact"
           oras attach \
             --artifact-type application/vnd.cncf.helm.config.v1+json \
             --annotation "org.opencontainers.image.description=Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform" \
             registry.ankra.cloud/ankra/ankra-agent:${{ steps.version.outputs.version }} \
             chart/README.md:application/markdown
-          
+
           if [ $? -eq 0 ]; then
             echo "Successfully attached README to Harbor artifact"
           else
