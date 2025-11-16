@@ -20,6 +20,13 @@ jobs:
         with:
           version: v3.14.0
 
+      - name: Install ORAS
+        run: |
+          curl -LO https://github.com/oras-project/oras/releases/download/v1.1.0/oras_1.1.0_linux_amd64.tar.gz
+          tar -xzf oras_1.1.0_linux_amd64.tar.gz
+          sudo mv oras /usr/local/bin/
+          oras version
+
       - name: Extract version from tag
         id: version
         run: |
@@ -94,6 +101,29 @@ jobs:
           else
             echo "Failed to push chart to Harbor"
             exit 1
+          fi
+
+      - name: Attach README to Harbor artifact
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+        run: |
+          echo "Logging in to Harbor with ORAS"
+          echo "$HARBOR_PASSWORD" | oras login registry.ankra.cloud \
+            --username "$HARBOR_USERNAME" \
+            --password-stdin
+          
+          echo "Attaching README.md to chart artifact"
+          oras attach \
+            --artifact-type application/vnd.cncf.helm.config.v1+json \
+            --annotation "org.opencontainers.image.description=Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform" \
+            registry.ankra.cloud/ankra/ankra-agent:${{ steps.version.outputs.version }} \
+            chart/README.md:application/markdown
+          
+          if [ $? -eq 0 ]; then
+            echo "Successfully attached README to Harbor artifact"
+          else
+            echo "Warning: Failed to attach README, but chart was pushed successfully"
           fi
 
       - name: Logout from Harbor
