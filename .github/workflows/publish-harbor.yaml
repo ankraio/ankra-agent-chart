@@ -51,9 +51,27 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Checkout main branch (we're in detached HEAD from tag checkout)
+          git fetch origin main
+          git checkout main
+          
+          # Apply the version changes
+          VERSION="${{ steps.version.outputs.version }}"
+          sed -i "s/^version:.*/version: $VERSION/" chart/Chart.yaml
+          sed -i "s/^appVersion:.*/appVersion: $VERSION/" chart/Chart.yaml
+          
+          # Commit and push if there are changes
           git add chart/Chart.yaml
-          git commit -m "chore: update Chart.yaml to version ${{ steps.version.outputs.version }}" || echo "No changes to commit"
-          git push origin HEAD:main
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update Chart.yaml to version $VERSION [skip ci]"
+            git push origin main
+          fi
+          
+          # Return to the tag for packaging
+          git checkout -
 
       - name: Validate Harbor credentials
         env:
