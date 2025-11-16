@@ -8,6 +8,42 @@ entries:
       artifacthub.io/license: Apache-2.0
     apiVersion: v2
     appVersion: 1.0.232
+    created: "2025-11-16T09:02:46.276257948Z"
+    description: Kubernetes agent for seamless cluster integration, monitoring, and
+      automation with the Ankra platform
+    digest: 414fa458afe61ffbcea12c5e4f06ea97295ccca1ec09ada2a4c348800d0785fd
+    home: https://ankra.io
+    icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
+    keywords:
+    - kubernetes
+    - agent
+    - monitoring
+    - automation
+    - management
+    - cloud-native
+    - devops
+    - observability
+    - cluster-management
+    - scheduler
+    - integration
+    maintainers:
+    - email: hello@ankra.io
+      name: Ankra Team
+      url: https://ankra.io
+    name: ankra-agent
+    sources:
+    - https://github.com/ankraio/ankra-agent-chart
+    type: application
+    urls:
+    - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-1.0.232.tgz
+    version: 1.0.232
+  - annotations:
+      artifacthub.io/alternativeName: Ankra Kubernetes Agent
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/displayName: Ankra Agent
+      artifacthub.io/license: Apache-2.0
+    apiVersion: v2
+    appVersion: 1.0.232
     created: "2025-11-15T23:46:42.941205762Z"
     description: Kubernetes agent for seamless cluster integration, monitoring, and
       automation with the Ankra platform
@@ -50,4 +86,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-15T23:46:42.940596339Z"
+generated: "2025-11-16T09:02:46.275636014Z"
