@@ -34,3 +34,5 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/displayName: Ankra Agent
   artifacthub.io/alternativeName: Ankra Kubernetes Agent
+  org.opencontainers.image.description: "Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform"
+  org.opencontainers.image.documentation: "https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md"

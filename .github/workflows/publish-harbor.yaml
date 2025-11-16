@@ -66,6 +66,8 @@ jobs:
       - name: Package Helm Chart
         run: |
           helm package chart/ --version ${{ steps.version.outputs.version }}
+          echo "Verifying README.md is in the package:"
+          tar -tzf ankra-agent-${{ steps.version.outputs.version }}.tgz | grep README.md || echo "WARNING: README.md not found in package"
 
       - name: Login to Harbor
         env:
