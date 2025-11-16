@@ -6,12 +6,15 @@ entries:
       artifacthub.io/category: integration-delivery
       artifacthub.io/displayName: Ankra Agent
       artifacthub.io/license: Apache-2.0
+      org.opencontainers.image.description: Kubernetes agent for seamless cluster
+        integration, monitoring, and automation with the Ankra platform
+      org.opencontainers.image.documentation: https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md
     apiVersion: v2
     appVersion: 1.0.232
-    created: "2025-11-16T09:02:46.276257948Z"
+    created: "2025-11-16T10:07:20.083178225Z"
     description: Kubernetes agent for seamless cluster integration, monitoring, and
       automation with the Ankra platform
-    digest: 414fa458afe61ffbcea12c5e4f06ea97295ccca1ec09ada2a4c348800d0785fd
+    digest: b134a5288f9262ebe011d2eed5f80b62db94152bc54591ad5427772521db0ee9
     home: https://ankra.io
     icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
     keywords:
@@ -86,4 +89,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.232/.cr-release-packages/ankra-agent-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-16T09:02:46.275636014Z"
+generated: "2025-11-16T10:07:20.08257681Z"
