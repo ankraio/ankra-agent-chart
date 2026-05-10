@@ -27,8 +27,8 @@ image:
   pull_policy: Always
   # Which secret to use for pulling images.
   pull_secrets: []
-  # Image tag - leave empty to use Chart.AppVersion, or override with specific tag like "latest"
-  tag: ""
+  # Image tag - default to "stable" moving tag, or override with specific tag
+  tag: "stable"
 
 service_account:
   # Annotations to add to the service account
