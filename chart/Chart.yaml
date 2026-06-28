@@ -66,5 +66,12 @@ annotations:
       url: https://github.com/ankraio/ankra-agent-chart
   artifacthub.io/recommendations: |
     - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+  artifacthub.io/images: |
+    - name: ankra-agent
+      image: registry.ankra.cloud/ankra/agent:stable
+      whitelisted: true
+      platforms:
+        - linux/amd64
+        - linux/arm64
   org.opencontainers.image.description: "Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform"
   org.opencontainers.image.documentation: "https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md"

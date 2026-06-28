@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Ankra Agent Helm chart values",
+  "description": "Configuration values for the Ankra Agent chart.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "log_level": {
+      "type": "string",
+      "title": "Log level",
+      "description": "Log level for the agent.",
+      "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+    },
+    "nats_worker_max_workers": {
+      "type": "integer",
+      "title": "NATS worker count",
+      "description": "Maximum number of NATS worker threads for processing commands.",
+      "minimum": 1
+    },
+    "config": {
+      "type": "object",
+      "title": "Agent connection configuration",
+      "additionalProperties": true,
+      "properties": {
+        "ankra_url": {
+          "type": "string",
+          "title": "Ankra platform URL",
+          "description": "Base URL of the Ankra platform the agent connects to."
+        },
+        "token": {
+          "type": "string",
+          "title": "Agent token",
+          "description": "Ankra agent token. Leave empty when using an existing secret."
+        },
+        "existing_secret_name": {
+          "type": "string",
+          "title": "Existing secret name",
+          "description": "Name of a pre-existing secret that holds the agent token."
+        },
+        "secret_key": {
+          "type": "string",
+          "title": "Existing secret key",
+          "description": "Key within the existing secret that holds the agent token."
+        }
+      }
+    },
+    "replica_count": {
+      "type": "integer",
+      "title": "Replica count",
+      "description": "Number of agent replicas to run.",
+      "minimum": 0
+    },
+    "topologySpreadConstraints": {
+      "type": "array",
+      "title": "Topology spread constraints",
+      "description": "Pod topology spread constraints applied to the agent pods.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "terminationGracePeriodSeconds": {
+      "type": "integer",
+      "title": "Termination grace period (seconds)",
+      "description": "Time to wait before forcefully terminating the agent. Should not be set too low or the agent may not finish its work.",
+      "minimum": 0
+    },
+    "image": {
+      "type": "object",
+      "title": "Container image",
+      "additionalProperties": true,
+      "properties": {
+        "repository": {
+          "type": "string",
+          "title": "Image repository",
+          "description": "Repository for the agent container image."
+        },
+        "pull_policy": {
+          "type": "string",
+          "title": "Image pull policy",
+          "description": "Image pull policy for the agent container.",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        },
+        "pull_secrets": {
+          "type": "array",
+          "title": "Image pull secrets",
+          "description": "References to secrets used for pulling the image from a private registry.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "tag": {
+          "type": "string",
+          "title": "Image tag",
+          "description": "Image tag. Defaults to the moving 'stable' tag, or override with a specific version."
+        }
+      }
+    },
+    "service_account": {
+      "type": "object",
+      "title": "Service account",
+      "additionalProperties": true,
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "title": "Service account annotations",
+          "description": "Annotations to add to the service account.",
+          "additionalProperties": { "type": "string" }
+        },
+        "name": {
+          "type": "string",
+          "title": "Service account name",
+          "description": "Name of the service account to use."
+        }
+      }
+    },
+    "pod_annotations": {
+      "type": "object",
+      "title": "Pod annotations",
+      "description": "Annotations to add to the agent pods.",
+      "additionalProperties": { "type": "string" }
+    },
+    "pod_security_context": {
+      "type": "object",
+      "title": "Pod security context",
+      "description": "Security context applied at the pod level."
+    },
+    "security_context": {
+      "type": "object",
+      "title": "Container security context",
+      "description": "Security context applied at the container level."
+    },
+    "service": {
+      "type": "object",
+      "title": "Service",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Service type",
+          "description": "Kubernetes service type.",
+          "enum": ["ClusterIP", "NodePort", "LoadBalancer", "ExternalName"]
+        },
+        "port": {
+          "type": "integer",
+          "title": "Service port",
+          "description": "Port exposed by the service.",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "name": {
+          "type": "string",
+          "title": "Service port name",
+          "description": "Name of the service port."
+        },
+        "node_port": {
+          "type": ["string", "integer"],
+          "title": "Node port",
+          "description": "Node port to expose when service type is NodePort. Leave empty to let Kubernetes assign one."
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Service annotations",
+          "description": "Annotations to add to the service.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "title": "Resource requests and limits",
+      "description": "Compute resource requests and limits for the agent container.",
+      "additionalProperties": true,
+      "properties": {
+        "limits": {
+          "type": "object",
+          "title": "Resource limits"
+        },
+        "requests": {
+          "type": "object",
+          "title": "Resource requests"
+        }
+      }
+    },
+    "node_selector": {
+      "type": "object",
+      "title": "Node selector",
+      "description": "Node selector applied to the agent pods.",
+      "additionalProperties": { "type": "string" }
+    },
+    "tolerations": {
+      "type": "array",
+      "title": "Tolerations",
+      "description": "Tolerations applied to the agent pods.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "affinity": {
+      "type": "object",
+      "title": "Affinity",
+      "description": "Affinity rules applied to the agent pods."
+    },
+    "extra_env": {
+      "type": "array",
+      "title": "Extra environment variables",
+      "description": "Additional environment variables to inject into the agent container.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "nameOverride": {
+      "type": "string",
+      "title": "Name override",
+      "description": "Override the chart name used in resource names."
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "title": "Full name override",
+      "description": "Override the fully qualified app name used in resource names."
+    }
+  }
+}
