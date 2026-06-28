@@ -1,0 +1,60 @@
+name: Deploy GitHub Pages
+
+# Serves index.yaml and artifacthub-repo.yml for ArtifactHub and helm repo add.
+# ArtifactHub cannot reach registry.ankra.cloud (private Harbor); this HTTP repo
+# is the supported indexing source.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.yaml
+      - artifacthub-repo.yml
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ankra-agent-chart-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp index.yaml artifacthub-repo.yml _site/
+          cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+            <head><meta charset="utf-8"><title>Ankra Agent Helm Chart</title></head>
+            <body>
+              <p>Ankra Agent Helm chart repository.</p>
+              <pre>helm repo add ankra-agent https://ankraio.github.io/ankra-agent-chart
+          helm repo update
+          helm search repo ankra-agent</pre>
+            </body>
+          </html>
+          EOF
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

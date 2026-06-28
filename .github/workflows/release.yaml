@@ -29,39 +29,40 @@ jobs:
           version: v3.14.0
 
       - name: Package Helm Chart
+        id: package
         run: |
-          helm package chart/ -d .cr-release-packages
+          set -euo pipefail
+          mkdir -p /tmp/chart-packages
+          helm package chart/ -d /tmp/chart-packages
+          chart_package="$(ls /tmp/chart-packages/*.tgz)"
+          echo "chart_package=${chart_package}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: |
+          set -euo pipefail
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           gh release create "$TAG_NAME" \
-            .cr-release-packages/*.tgz \
+            /tmp/chart-packages/*.tgz \
             --title "Release $TAG_NAME" \
             --notes "Release $TAG_NAME of ankra-agent Helm chart"
 
       - name: Update Helm Repository Index
         run: |
+          set -euo pipefail
           TAG_NAME="${GITHUB_REF#refs/tags/}"
-          BASE_URL="https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME"
-
-          # Go back to main branch
           git checkout main
-
-          # Index only the freshly packaged charts so the generated download URLs
-          # resolve to the flat GitHub release asset path (no nested directory).
-          if [ -f index.yaml ]; then
-            echo "Found existing index.yaml, merging"
-            helm repo index .cr-release-packages --url "$BASE_URL" --merge index.yaml
+          cp /tmp/chart-packages/*.tgz .
+          if [[ -f index.yaml ]]; then
+            helm repo index . \
+              --url "https://github.com/ankraio/ankra-agent-chart/releases/download/${TAG_NAME}" \
+              --merge index.yaml
           else
-            echo "Creating new index.yaml"
-            helm repo index .cr-release-packages --url "$BASE_URL"
+            helm repo index . \
+              --url "https://github.com/ankraio/ankra-agent-chart/releases/download/${TAG_NAME}"
           fi
-          mv .cr-release-packages/index.yaml index.yaml
-
-          # Commit and push to main
+          rm -f *.tgz
           git add index.yaml
-          git commit -m "chore: update Helm repository index for $TAG_NAME [skip ci]"
+          git commit -m "chore: update Helm repository index for ${TAG_NAME} [skip ci]"
           git push origin main
