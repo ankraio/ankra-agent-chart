@@ -33,7 +33,6 @@ annotations:
   artifacthub.io/category: integration-delivery
   artifacthub.io/license: Apache-2.0
   artifacthub.io/displayName: Ankra Agent
-  artifacthub.io/alternativeName: Ankra Kubernetes Agent
   artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
