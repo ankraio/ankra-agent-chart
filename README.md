@@ -16,9 +16,22 @@ The Ankra Agent enables seamless integration between your Kubernetes clusters an
 
 ## Quick Start
 
-### Installation
+### Installation via Helm repository (recommended)
 
-Install the chart directly from the OCI registry:
+```bash
+helm repo add ankra-agent https://ankraio.github.io/ankra-agent-chart
+helm repo update
+helm upgrade --install ankra-agent ankra-agent/ankra-agent \
+  --version 1.0.232 \
+  --set config.ankra_url=https://platform.ankra.app \
+  --set config.token=your-ankra-token-here \
+  --namespace=ankra \
+  --create-namespace
+```
+
+### Installation from OCI registry
+
+Install the chart from the Ankra Harbor registry (requires network access to `registry.ankra.cloud`):
 
 ```bash
 helm upgrade \
