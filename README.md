@@ -189,7 +189,7 @@ kubectl logs -n ankra-system -l app.kubernetes.io/name=ankra-agent
 
 ## Support
 
-- Documentation: [https://docs.ankra.io](https://docs.ankra.io)
+- Documentation: [https://docs.ankra.ai](https://docs.ankra.ai)
 - Issues: [GitHub Issues](https://github.com/ankraio/ankra-agent-chart/issues)
 - Email: hello@ankra.io
 

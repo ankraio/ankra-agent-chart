@@ -188,6 +188,6 @@ Before submitting your PR:
 Feel free to:
 - Open an issue for discussion
 - Email us at hello@ankra.io
-- Check our [documentation](https://docs.ankra.io)
+- Check our [documentation](https://docs.ankra.ai)
 
 Thank you for contributing! 🎉

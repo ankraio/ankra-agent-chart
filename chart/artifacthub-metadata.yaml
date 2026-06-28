@@ -53,7 +53,7 @@ annotations:
     - name: Platform
       url: https://platform.ankra.app
     - name: Documentation
-      url: https://docs.ankra.io
+      url: https://docs.ankra.ai
     - name: Support
       url: https://github.com/ankraio/ankra-agent-chart/issues
     - name: Source Code

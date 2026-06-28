@@ -64,7 +64,10 @@ resources:
 
 node_selector: {}
 
-tolerations: []
+tolerations:
+  - key: "node.cloudprovider.kubernetes.io/uninitialized"
+    operator: "Exists"
+    effect: "NoSchedule"
 
 affinity: {}
 
