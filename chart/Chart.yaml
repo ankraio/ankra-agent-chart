@@ -34,5 +34,37 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/displayName: Ankra Agent
   artifacthub.io/alternativeName: Ankra Kubernetes Agent
+  artifacthub.io/prerelease: "false"
+  artifacthub.io/containsSecurityUpdates: "false"
+  artifacthub.io/changes: |
+    - kind: added
+      description: Initial public release of the Ankra Agent Helm Chart
+    - kind: added
+      description: Python-based scheduler agent for task automation
+    - kind: added
+      description: Support for configuring agent via values with secure token management
+    - kind: added
+      description: RBAC resources (ClusterRole, ClusterRoleBinding, ServiceAccount)
+    - kind: added
+      description: Health checks (liveness, readiness, startup probes)
+    - kind: added
+      description: Configurable resource limits and requests optimized for Python workloads
+    - kind: added
+      description: Support for high availability with pod anti-affinity
+    - kind: added
+      description: Integration with Prometheus for metrics collection
+  artifacthub.io/links: |
+    - name: Website
+      url: https://ankra.io
+    - name: Platform
+      url: https://platform.ankra.app
+    - name: Documentation
+      url: https://docs.ankra.ai
+    - name: support
+      url: https://github.com/ankraio/ankra-agent-chart/issues
+    - name: Source Code
+      url: https://github.com/ankraio/ankra-agent-chart
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
   org.opencontainers.image.description: "Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform"
   org.opencontainers.image.documentation: "https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md"

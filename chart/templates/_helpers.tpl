@@ -55,7 +55,6 @@ Create the name of the service account to use
 */}}
 {{- define "ankra-agent.service_accountName" -}}
 {{- default (include "ankra-agent.fullname" .) .Values.service_account.name }}
-{{- default "default" .Values.service_account.name }}
 {{- end }}
 
 {{/*

@@ -45,18 +45,21 @@ jobs:
       - name: Update Helm Repository Index
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
+          BASE_URL="https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME"
 
           # Go back to main branch
           git checkout main
 
-          # Check if index.yaml exists and merge, otherwise create new
+          # Index only the freshly packaged charts so the generated download URLs
+          # resolve to the flat GitHub release asset path (no nested directory).
           if [ -f index.yaml ]; then
             echo "Found existing index.yaml, merging"
-            helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME --merge index.yaml
+            helm repo index .cr-release-packages --url "$BASE_URL" --merge index.yaml
           else
             echo "Creating new index.yaml"
-            helm repo index . --url https://github.com/ankraio/ankra-agent-chart/releases/download/$TAG_NAME
+            helm repo index .cr-release-packages --url "$BASE_URL"
           fi
+          mv .cr-release-packages/index.yaml index.yaml
 
           # Commit and push to main
           git add index.yaml
