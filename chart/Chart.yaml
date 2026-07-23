@@ -33,7 +33,6 @@ annotations:
   artifacthub.io/category: integration-delivery
   artifacthub.io/license: Apache-2.0
   artifacthub.io/displayName: Ankra Agent
-  artifacthub.io/alternativeName: Ankra Kubernetes Agent
   artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
@@ -66,5 +65,12 @@ annotations:
       url: https://github.com/ankraio/ankra-agent-chart
   artifacthub.io/recommendations: |
     - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+  artifacthub.io/images: |
+    - name: ankra-agent
+      image: registry.ankra.cloud/ankra/agent:stable
+      whitelisted: true
+      platforms:
+        - linux/amd64
+        - linux/arm64
   org.opencontainers.image.description: "Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform"
   org.opencontainers.image.documentation: "https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md"
