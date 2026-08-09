@@ -58,7 +58,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 1. Clone your fork:
 ```bash
-git clone https://github.com/YOUR-USERNAME/ankra-agent-chart.git
+git clone https://github.com/ankraio/ankra-agent-chart.git
 cd ankra-agent-chart
 ```
 
