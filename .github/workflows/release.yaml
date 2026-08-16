@@ -64,5 +64,8 @@ jobs:
           fi
           rm -f *.tgz
           git add index.yaml
-          git commit -m "chore: update Helm repository index for ${TAG_NAME} [skip ci]"
+          # No [skip ci]: this push must trigger the Deploy GitHub Pages
+          # workflow, which serves index.yaml to Artifact Hub. Nothing else
+          # triggers on an index.yaml-only push, so there is no loop.
+          git commit -m "chore: update Helm repository index for ${TAG_NAME}"
           git push origin main
