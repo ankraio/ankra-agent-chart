@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.234] - 2026-08-16
+
+### Added
+- Security & Compliance section in the chart README and repository README,
+  linking the shared responsibility model, agent compliance review, hardening
+  guide, audit export, and the trust centre
+- PGP signing of release artifacts: `helm package --sign` in the release
+  workflow (key from the `HELM_SIGNING_KEY` secret), `.prov` provenance file
+  attached to each release, public key published at `pgp/ankra-helm-signing.asc`
+  and declared via the `artifacthub.io/signKey` annotation
+
 ## [1.0.233] - 2026-08-16
 
 ### Fixed
@@ -46,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service definition
 - Helm helpers and templates
 
-[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.233...HEAD
+[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.234...HEAD
+[1.0.234]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.233...v1.0.234
 [1.0.233]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.232...v1.0.233
 [1.0.232]: https://github.com/ankraio/ankra-agent-chart/compare/v0.0.1...v1.0.232
 [0.0.1]: https://github.com/ankraio/ankra-agent-chart/releases/tag/v0.0.1
