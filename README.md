@@ -66,14 +66,14 @@ helm upgrade \
 |-----------|-------------|---------|
 | `config.ankra_url` | Ankra platform URL | `https://platform.ankra.app` |
 | `config.token` | Your Ankra agent token | `""` |
-| `log_level` | Agent log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) | `INFO` |
+| `log_level` | Agent log level (`DEBUG`, `INFO`, `WARNING`, `ERROR`) | `INFO` |
 | `replica_count` | Number of agent replicas | `1` |
 
 ### Advanced Configuration
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `nats_worker_max_workers` | Maximum NATS worker threads | `15` |
+| `nats_worker_max_workers` | Maximum NATS commands processed concurrently | `15` |
 | `terminationGracePeriodSeconds` | Graceful shutdown timeout | `600` |
 | `image.repository` | Agent image repository | `registry.ankra.cloud/ankra/agent` |
 | `image.tag` | Agent image tag | `stable` |
@@ -159,7 +159,7 @@ To upgrade the agent to a new version:
 
 ```bash
 helm repo update
-helm upgrade ankra-agent ankra/ankra-agent --namespace ankra-system
+helm upgrade ankra-agent ankra-agent/ankra-agent --namespace ankra
 ```
 
 ## Uninstalling

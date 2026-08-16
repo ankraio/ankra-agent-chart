@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.234] - 2026-08-16
+## [1.0.234] - 2026-08-17
 
 ### Added
 - Security & Compliance section in the chart README and repository README,
@@ -17,6 +17,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   workflow (key from the `HELM_SIGNING_KEY` secret), `.prov` provenance file
   attached to each release, public key published at `pgp/ankra-helm-signing.asc`
   and declared via the `artifacthub.io/signKey` annotation
+
+### Changed
+- Documentation now describes the Go agent. The agent was rewritten from Python
+  to Go, but the chart still advertised a "Python Optimized" runtime and resource
+  settings tuned for a Python interpreter.
+- `nats_worker_max_workers` is described as a concurrency bound rather than a
+  count of "worker threads"; the agent schedules goroutines, not threads.
+
+### Fixed
+- `log_level` no longer offers `CRITICAL`. The agent maps `DEBUG`, `INFO`,
+  `WARNING`/`WARN` and `ERROR`, and falls back to `INFO` for anything else, so
+  `CRITICAL` silently produced *more* logging than `INFO` rather than less.
+- `values.schema.json` now accepts `WARN`, which the agent has always understood
+  but the schema rejected.
+- Documented resource defaults match `values.yaml` (100Mi request, 200Mi limit,
+  no CPU limit) instead of CPU and memory figures the chart never shipped.
+- The upgrade command referenced a `ankra/ankra-agent` chart under a repo added
+  as `ankra-agent`, so it could not resolve as written.
+- `chart/README.md` stated Kubernetes 1.19+ while the root README stated 1.31+.
+
+### Removed
+- Documentation for a startup probe and a `pod_disruption_budget` value; neither
+  is rendered by this chart.
 
 ## [1.0.233] - 2026-08-16
 

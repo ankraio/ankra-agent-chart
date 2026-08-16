@@ -1,10 +1,11 @@
 # Default values for ankra-agent.
 
 # @param log_level: The log level for the agent.
-# Allowed values: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+# Allowed values: "DEBUG", "INFO", "WARNING", "ERROR"
+# Anything else is treated as "INFO".
 log_level: "INFO"
 
-# @param nats_worker_max_workers: Maximum number of NATS worker threads for processing commands
+# @param nats_worker_max_workers: Maximum number of NATS commands processed concurrently
 nats_worker_max_workers: 15
 
 config:
