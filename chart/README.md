@@ -1,8 +1,8 @@
 # Ankra Agent
 
-![Version: 1.0.233](https://img.shields.io/badge/Version-1.0.233-informational?style=flat-square)
+![Version: 1.0.234](https://img.shields.io/badge/Version-1.0.234-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-![AppVersion: 1.0.233](https://img.shields.io/badge/AppVersion-1.0.233-informational?style=flat-square)
+![AppVersion: 1.0.234](https://img.shields.io/badge/AppVersion-1.0.234-informational?style=flat-square)
 
 The Ankra Agent is a Kubernetes agent that enables seamless integration between your Kubernetes clusters and the Ankra platform, providing monitoring, management, and automation capabilities for your cloud-native infrastructure.
 
@@ -28,7 +28,7 @@ Ankra Agent is designed to run inside your Kubernetes cluster and acts as a brid
 ```bash
 helm upgrade \
   --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
-  --version 1.0.233 \
+  --version 1.0.234 \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
   --create-namespace
@@ -116,6 +116,27 @@ pod_disruption_budget:
 | `resources.limits.memory` | Memory limit | `512Mi` |
 
 See the [full documentation](https://github.com/ankraio/ankra-agent-chart/blob/main/README.md) for complete configuration options.
+
+## Security & Compliance
+
+Ankra is a delivery and management plane, not a hosting provider: it does not sit in your data path, and clusters keep serving traffic even if the platform is unreachable (only reconciliation pauses). See the [shared responsibility model](https://docs.ankra.ai/security/shared-responsibility) for how this narrows Ankra's footprint in your SOC 2 / ISO 27001 scope.
+
+- **Connectivity**: the agent makes outbound HTTPS connections to the Ankra platform only. No inbound access to your cluster is required; the bundled Service is a `ClusterIP` used for health and metrics probes.
+- **Credentials**: the agent authenticates with a per-cluster token. Supply it via `config.token`, or reference a pre-existing Kubernetes Secret with `config.existing_secret_name` / `config.secret_key` so no token material passes through Helm values.
+- **Permissions**: the agent runs with a cluster-wide `ClusterRole` granting full API access, which it needs to deliver and reconcile arbitrary resources. It adds no new compliance boundary — it is one privileged identity inside a boundary you already govern. Review it in [agent compliance](https://docs.ankra.ai/security/agent-compliance) and lock it down further with the [hardening guide](https://docs.ankra.ai/security/agent-hardening).
+- **Audit**: actions performed through Ankra are recorded in the organisation audit log and exportable as CSV/JSON — see [audit export](https://docs.ankra.ai/security/audit-export).
+- **Certifications**: current certification and compliance status is published at [ankra.ai/trust](https://ankra.ai/trust).
+
+### Verifying release signatures
+
+Releases ship with a PGP provenance file. Verify a downloaded chart against the [Ankra Helm signing key](https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc) (fingerprint `B4B5 3D74 0742 3346 DA8D 6648 1EE5 3FF7 E023 7237`):
+
+```bash
+curl -sSLO https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc
+gpg --dearmor ankra-helm-signing.asc
+helm fetch --prov https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.234/ankra-agent-1.0.234.tgz
+helm verify --keyring ankra-helm-signing.asc.gpg ankra-agent-1.0.234.tgz
+```
 
 ## Support
 

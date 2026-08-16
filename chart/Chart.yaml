@@ -2,8 +2,8 @@ apiVersion: v2
 name: ankra-agent
 description: Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform
 type: application
-version: 1.0.233
-appVersion: 1.0.233
+version: 1.0.234
+appVersion: 1.0.234
 
 keywords:
   - kubernetes
@@ -36,15 +36,13 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
-    - kind: fixed
-      description: >-
-        Drop the invalid artifacthub.io/alternativeName annotation that made
-        Artifact Hub reject the package, so the chart README and metadata are
-        indexed again
     - kind: added
-      description: JSON schema for chart values
-    - kind: added
-      description: Container image metadata for the agent image
+      description: Security & Compliance section in the chart README
+    - kind: security
+      description: Release artifacts are now signed with PGP provenance files
+  artifacthub.io/signKey: |
+    fingerprint: B4B53D7407423346DA8D66481EE53FF7E0237237
+    url: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc
   artifacthub.io/links: |
     - name: Website
       url: https://ankra.io

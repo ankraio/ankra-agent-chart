@@ -22,7 +22,7 @@ The Ankra Agent enables seamless integration between your Kubernetes clusters an
 helm repo add ankra-agent https://ankraio.github.io/ankra-agent-chart
 helm repo update
 helm upgrade --install ankra-agent ankra-agent/ankra-agent \
-  --version 1.0.233 \
+  --version 1.0.234 \
   --set config.ankra_url=https://platform.ankra.app \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
@@ -36,7 +36,7 @@ Install the chart from the Ankra Harbor registry (requires network access to `re
 ```bash
 helm upgrade \
   --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
-  --version 1.0.233 \
+  --version 1.0.234 \
   --set config.ankra_url=https://platform.ankra.app \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
@@ -199,6 +199,18 @@ kubectl logs -n ankra-system -l app.kubernetes.io/name=ankra-agent
 **Pod not starting:**
 - Check image pull secrets if using a private registry
 - Verify RBAC permissions are correctly configured
+
+## Security & Compliance
+
+Ankra is a delivery and management plane, not a hosting provider: it is not in your data path, and clusters keep serving if the platform is unreachable (only reconciliation pauses). The agent connects outbound-only over HTTPS, authenticates with a per-cluster token (supply it via an existing Secret with `config.existing_secret_name` to keep token material out of Helm values), and runs with a cluster-wide `ClusterRole` granting full API access — one privileged identity inside a boundary you already govern, adding no new compliance boundary.
+
+- [Shared responsibility model](https://docs.ankra.ai/security/shared-responsibility)
+- [Agent compliance review](https://docs.ankra.ai/security/agent-compliance)
+- [Agent hardening guide](https://docs.ankra.ai/security/agent-hardening)
+- [Audit log export](https://docs.ankra.ai/security/audit-export)
+- Certification status: [ankra.ai/trust](https://ankra.ai/trust)
+
+Releases are signed with the [Ankra Helm signing key](pgp/ankra-helm-signing.asc) (fingerprint `B4B5 3D74 0742 3346 DA8D 6648 1EE5 3FF7 E023 7237`); each release carries a `.prov` provenance file for `helm verify`.
 
 ## Support
 
