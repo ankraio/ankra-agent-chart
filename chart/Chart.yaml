@@ -2,8 +2,8 @@ apiVersion: v2
 name: ankra-agent
 description: Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform
 type: application
-version: 1.0.232
-appVersion: 1.0.232
+version: 1.0.233
+appVersion: 1.0.233
 
 keywords:
   - kubernetes
@@ -36,22 +36,15 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
+    - kind: fixed
+      description: >-
+        Drop the invalid artifacthub.io/alternativeName annotation that made
+        Artifact Hub reject the package, so the chart README and metadata are
+        indexed again
     - kind: added
-      description: Initial public release of the Ankra Agent Helm Chart
+      description: JSON schema for chart values
     - kind: added
-      description: Python-based scheduler agent for task automation
-    - kind: added
-      description: Support for configuring agent via values with secure token management
-    - kind: added
-      description: RBAC resources (ClusterRole, ClusterRoleBinding, ServiceAccount)
-    - kind: added
-      description: Health checks (liveness, readiness, startup probes)
-    - kind: added
-      description: Configurable resource limits and requests optimized for Python workloads
-    - kind: added
-      description: Support for high availability with pod anti-affinity
-    - kind: added
-      description: Integration with Prometheus for metrics collection
+      description: Container image metadata for the agent image
   artifacthub.io/links: |
     - name: Website
       url: https://ankra.io
@@ -59,7 +52,7 @@ annotations:
       url: https://platform.ankra.app
     - name: Documentation
       url: https://docs.ankra.ai
-    - name: support
+    - name: Support
       url: https://github.com/ankraio/ankra-agent-chart/issues
     - name: Source Code
       url: https://github.com/ankraio/ankra-agent-chart

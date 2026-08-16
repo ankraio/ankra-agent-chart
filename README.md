@@ -22,7 +22,7 @@ The Ankra Agent enables seamless integration between your Kubernetes clusters an
 helm repo add ankra-agent https://ankraio.github.io/ankra-agent-chart
 helm repo update
 helm upgrade --install ankra-agent ankra-agent/ankra-agent \
-  --version 1.0.232 \
+  --version 1.0.233 \
   --set config.ankra_url=https://platform.ankra.app \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
@@ -36,7 +36,7 @@ Install the chart from the Ankra Harbor registry (requires network access to `re
 ```bash
 helm upgrade \
   --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
-  --version 1.0.232 \
+  --version 1.0.233 \
   --set config.ankra_url=https://platform.ankra.app \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
