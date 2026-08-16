@@ -2,8 +2,8 @@ apiVersion: v2
 name: ankra-agent
 description: Kubernetes agent for seamless cluster integration, monitoring, and automation with the Ankra platform
 type: application
-version: 1.0.234
-appVersion: 1.0.234
+version: 1.0.235
+appVersion: 1.0.235
 
 keywords:
   - kubernetes
@@ -36,10 +36,6 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
-    - kind: added
-      description: Security & Compliance section in the chart README
-    - kind: security
-      description: Release artifacts are now signed with PGP provenance files
     - kind: changed
       description: >-
         Documentation now describes the Go agent. The agent was rewritten from
