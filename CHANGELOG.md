@@ -7,16 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.234] - 2026-08-17
+## [1.0.235] - 2026-08-17
 
-### Added
-- Security & Compliance section in the chart README and repository README,
-  linking the shared responsibility model, agent compliance review, hardening
-  guide, audit export, and the trust centre
-- PGP signing of release artifacts: `helm package --sign` in the release
-  workflow (key from the `HELM_SIGNING_KEY` secret), `.prov` provenance file
-  attached to each release, public key published at `pgp/ankra-helm-signing.asc`
-  and declared via the `artifacthub.io/signKey` annotation
+`v1.0.234` was tagged from the security & compliance work before the Go
+documentation corrections merged, so the released 1.0.234 artifact still
+described a Python agent. A released version is immutable, so those corrections
+ship here instead. 1.0.234 remains published and is unaffected otherwise.
 
 ### Changed
 - Documentation now describes the Go agent. The agent was rewritten from Python
@@ -27,8 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `log_level` no longer offers `CRITICAL`. The agent maps `DEBUG`, `INFO`,
-  `WARNING`/`WARN` and `ERROR`, and falls back to `INFO` for anything else, so
-  `CRITICAL` silently produced *more* logging than `INFO` rather than less.
+  `WARNING`/`WARN` and `ERROR`; `CRITICAL` previously fell back to `INFO` and so
+  produced *more* logging rather than less. Agents from ankraio/agent#67 onward
+  additionally treat `CRITICAL` and `FATAL` as aliases for `ERROR`.
 - `values.schema.json` now accepts `WARN`, which the agent has always understood
   but the schema rejected.
 - Documented resource defaults match `values.yaml` (100Mi request, 200Mi limit,
@@ -40,6 +37,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Documentation for a startup probe and a `pod_disruption_budget` value; neither
   is rendered by this chart.
+
+## [1.0.234] - 2026-08-17
+
+### Added
+- Security & Compliance section in the chart README and repository README,
+  linking the shared responsibility model, agent compliance review, hardening
+  guide, audit export, and the trust centre
+- PGP signing of release artifacts: `helm package --sign` in the release
+  workflow (key from the `HELM_SIGNING_KEY` secret), `.prov` provenance file
+  attached to each release, public key published at `pgp/ankra-helm-signing.asc`
+  and declared via the `artifacthub.io/signKey` annotation
 
 ## [1.0.233] - 2026-08-16
 
@@ -80,7 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service definition
 - Helm helpers and templates
 
-[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.234...HEAD
+[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.235...HEAD
+[1.0.235]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.234...v1.0.235
 [1.0.234]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.233...v1.0.234
 [1.0.233]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.232...v1.0.233
 [1.0.232]: https://github.com/ankraio/ankra-agent-chart/compare/v0.0.1...v1.0.232

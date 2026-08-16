@@ -1,8 +1,8 @@
 # Ankra Agent
 
-![Version: 1.0.234](https://img.shields.io/badge/Version-1.0.234-informational?style=flat-square)
+![Version: 1.0.235](https://img.shields.io/badge/Version-1.0.235-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-![AppVersion: 1.0.234](https://img.shields.io/badge/AppVersion-1.0.234-informational?style=flat-square)
+![AppVersion: 1.0.235](https://img.shields.io/badge/AppVersion-1.0.235-informational?style=flat-square)
 
 The Ankra Agent is a Kubernetes agent that enables seamless integration between your Kubernetes clusters and the Ankra platform, providing monitoring, management, and automation capabilities for your cloud-native infrastructure.
 
@@ -28,7 +28,7 @@ Ankra Agent is a Go service that runs inside your Kubernetes cluster and acts as
 ```bash
 helm upgrade \
   --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
-  --version 1.0.234 \
+  --version 1.0.235 \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
   --create-namespace
@@ -140,8 +140,8 @@ Releases ship with a PGP provenance file. Verify a downloaded chart against the 
 ```bash
 curl -sSLO https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc
 gpg --dearmor ankra-helm-signing.asc
-helm fetch --prov https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.234/ankra-agent-1.0.234.tgz
-helm verify --keyring ankra-helm-signing.asc.gpg ankra-agent-1.0.234.tgz
+helm fetch --prov https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.235/ankra-agent-1.0.235.tgz
+helm verify --keyring ankra-helm-signing.asc.gpg ankra-agent-1.0.235.tgz
 ```
 
 ## Support
