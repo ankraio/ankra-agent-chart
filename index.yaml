@@ -4,6 +4,74 @@ entries:
   - annotations:
       artifacthub.io/category: integration-delivery
       artifacthub.io/changes: |
+        - kind: added
+          description: Security & Compliance section in the chart README
+        - kind: security
+          description: Release artifacts are now signed with PGP provenance files
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/displayName: Ankra Agent
+      artifacthub.io/images: |
+        - name: ankra-agent
+          image: registry.ankra.cloud/ankra/agent:stable
+          whitelisted: true
+          platforms:
+            - linux/amd64
+            - linux/arm64
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Website
+          url: https://ankra.io
+        - name: Platform
+          url: https://platform.ankra.app
+        - name: Documentation
+          url: https://docs.ankra.ai
+        - name: Support
+          url: https://github.com/ankraio/ankra-agent-chart/issues
+        - name: Source Code
+          url: https://github.com/ankraio/ankra-agent-chart
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+      artifacthub.io/signKey: |
+        fingerprint: B4B53D7407423346DA8D66481EE53FF7E0237237
+        url: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc
+      org.opencontainers.image.description: Kubernetes agent for seamless cluster
+        integration, monitoring, and automation with the Ankra platform
+      org.opencontainers.image.documentation: https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md
+    apiVersion: v2
+    appVersion: 1.0.234
+    created: "2026-08-16T22:07:11.375292869Z"
+    description: Kubernetes agent for seamless cluster integration, monitoring, and
+      automation with the Ankra platform
+    digest: 866b95bf0a9b19fc7a32f7e9790fb206536f80132446a0a7d3474153dabd2567
+    home: https://ankra.io
+    icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
+    keywords:
+    - kubernetes
+    - agent
+    - monitoring
+    - automation
+    - management
+    - cloud-native
+    - devops
+    - observability
+    - cluster-management
+    - scheduler
+    - integration
+    maintainers:
+    - email: hello@ankra.io
+      name: Ankra Team
+      url: https://ankra.io
+    name: ankra-agent
+    sources:
+    - https://github.com/ankraio/ankra-agent-chart
+    type: application
+    urls:
+    - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.234/ankra-agent-1.0.234.tgz
+    version: 1.0.234
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/changes: |
         - kind: fixed
           description: >-
             Drop the invalid artifacthub.io/alternativeName annotation that made
@@ -71,4 +139,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.233/ankra-agent-1.0.233.tgz
     version: 1.0.233
-generated: "2026-08-16T21:21:43.098858536Z"
+generated: "2026-08-16T22:07:11.374595407Z"
