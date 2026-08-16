@@ -8,13 +8,13 @@
     "log_level": {
       "type": "string",
       "title": "Log level",
-      "description": "Log level for the agent.",
-      "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+      "description": "Log level for the agent. Anything outside this set is treated as INFO.",
+      "enum": ["DEBUG", "INFO", "WARNING", "WARN", "ERROR"]
     },
     "nats_worker_max_workers": {
       "type": "integer",
       "title": "NATS worker count",
-      "description": "Maximum number of NATS worker threads for processing commands.",
+      "description": "Maximum number of NATS commands processed concurrently.",
       "minimum": 1
     },
     "config": {

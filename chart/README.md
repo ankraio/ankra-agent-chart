@@ -8,20 +8,20 @@ The Ankra Agent is a Kubernetes agent that enables seamless integration between 
 
 ## Overview
 
-Ankra Agent is designed to run inside your Kubernetes cluster and acts as a bridge between your infrastructure and the Ankra platform. It's built for reliable scheduling and task execution, optimized for low resource consumption while maintaining high performance.
+Ankra Agent is a Go service that runs inside your Kubernetes cluster and acts as a bridge between your infrastructure and the Ankra platform. It's built for reliable scheduling and task execution, optimized for low resource consumption while maintaining high performance.
 
 ## Features
 
 - 🔄 **Real-time Monitoring**: Continuous cluster health and resource monitoring with built-in metrics collection
 - 🛡️ **Secure Communication**: End-to-end encrypted connection to Ankra platform via HTTPS with token-based authentication
 - 🎯 **Smart Scheduling**: NATS-powered scheduler for efficient task execution with configurable worker pools
-- 📊 **Resource Management**: Optimized CPU and memory usage with configurable limits suitable for production workloads
+- 📊 **Resource Management**: Memory-bounded by default with configurable requests and limits suitable for production workloads
 - 🔐 **RBAC Ready**: Built-in ClusterRole and ServiceAccount configuration with least-privilege access
 - 🚀 **Easy Deployment**: Simple Helm installation with minimal configuration via OCI registry
-- ❤️ **Health Checks**: Comprehensive liveness, readiness, and startup probes for reliability
-- 🔄 **High Availability**: Support for multiple replicas with pod anti-affinity and disruption budgets
+- ❤️ **Health Checks**: Liveness and readiness probes on `/livez` and `/readyz` for reliability
+- 🔄 **High Availability**: Support for multiple replicas with pod affinity and topology spread constraints
 - 📈 **Prometheus Integration**: Built-in metrics endpoint for observability
-- 🐍 **Python Optimized**: Environment variables and settings optimized for Python runtime performance
+- 🐹 **Small Footprint**: A single static Go binary with no runtime or interpreter to ship, sized for a 100Mi request
 
 ## Quick Start
 
@@ -36,7 +36,7 @@ helm upgrade \
 
 ## Prerequisites
 
-- Kubernetes 1.19+
+- Kubernetes 1.31+
 - Helm 3.0+
 - An Ankra account with agent token (sign up at [https://platform.ankra.app](https://platform.ankra.app))
 
@@ -54,12 +54,13 @@ replica_count: 1
 
 resources:
   limits:
-    cpu: 1000m
-    memory: 512Mi
+    memory: 200Mi
   requests:
-    cpu: 200m
-    memory: 256Mi
+    memory: 100Mi
 ```
+
+The agent is a single static Go binary, so it is sized on memory only — no CPU
+limit is set by default, which keeps it from being throttled while reconciling.
 
 ### Using Existing Secret
 
@@ -97,9 +98,13 @@ affinity:
             - ankra-agent
         topologyKey: kubernetes.io/hostname
 
-pod_disruption_budget:
-  enabled: true
-  min_available: 1
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: ankra-agent
 ```
 
 ## Values Reference
@@ -108,12 +113,13 @@ pod_disruption_budget:
 |-----------|-------------|---------|
 | `config.ankra_url` | Ankra platform URL | `https://platform.ankra.app` |
 | `config.token` | Your Ankra agent token | `""` |
-| `log_level` | Agent log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) | `INFO` |
+| `log_level` | Agent log level (`DEBUG`, `INFO`, `WARNING`, `ERROR`) | `INFO` |
+| `nats_worker_max_workers` | Maximum concurrent NATS command workers | `15` |
 | `replica_count` | Number of agent replicas | `1` |
 | `image.repository` | Agent image repository | `registry.ankra.cloud/ankra/agent` |
-| `image.tag` | Image tag (empty = use appVersion) | `""` |
-| `resources.limits.cpu` | CPU limit | `1000m` |
-| `resources.limits.memory` | Memory limit | `512Mi` |
+| `image.tag` | Image tag (empty = use appVersion) | `stable` |
+| `resources.requests.memory` | Memory request | `100Mi` |
+| `resources.limits.memory` | Memory limit | `200Mi` |
 
 See the [full documentation](https://github.com/ankraio/ankra-agent-chart/blob/main/README.md) for complete configuration options.
 
