@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.233] - 2026-08-16
+
+### Fixed
+- Removed the invalid `artifacthub.io/alternativeName` annotation. Artifact Hub
+  rejected every registration of 1.0.232 with "invalid alternative name (must be
+  a subset or superset of the name)", so the package — and with it the chart
+  README — never appeared on Artifact Hub. The annotation was dropped from `main`
+  in July 2026 but no release carried the fix until now.
+
+### Added
+- JSON schema for chart values (`chart/values.schema.json`)
+- Container image metadata for the agent image
+
 ## [1.0.232] - 2025-11-15
 
 ### Added
@@ -33,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service definition
 - Helm helpers and templates
 
-[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.232...HEAD
+[Unreleased]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.233...HEAD
+[1.0.233]: https://github.com/ankraio/ankra-agent-chart/compare/v1.0.232...v1.0.233
 [1.0.232]: https://github.com/ankraio/ankra-agent-chart/compare/v0.0.1...v1.0.232
 [0.0.1]: https://github.com/ankraio/ankra-agent-chart/releases/tag/v0.0.1

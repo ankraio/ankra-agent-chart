@@ -144,20 +144,9 @@ jobs:
             echo "Warning: Failed to attach README, but chart was pushed successfully"
           fi
 
-      - name: Tag and push stable version
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          echo "Pulling chart version $VERSION"
-          helm pull oci://registry.ankra.cloud/ankra/ankra-agent --version $VERSION
-
-          echo "Re-pushing as stable tag"
-          helm push ankra-agent-$VERSION.tgz oci://registry.ankra.cloud/ankra --version stable
-
-          if [ $? -eq 0 ]; then
-            echo "Successfully pushed stable tag"
-          else
-            echo "Warning: Failed to push stable tag"
-          fi
+      # No floating "stable" chart tag: helm push has no --version flag, so the
+      # step that re-pushed the chart as "stable" failed every release. The
+      # moving :stable tag belongs to the agent image (image.tag in values.yaml).
 
       - name: Logout from Harbor
         if: always()

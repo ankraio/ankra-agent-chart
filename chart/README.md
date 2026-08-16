@@ -1,8 +1,8 @@
 # Ankra Agent
 
-![Version: 1.0.232](https://img.shields.io/badge/Version-1.0.232-informational?style=flat-square)
+![Version: 1.0.233](https://img.shields.io/badge/Version-1.0.233-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-![AppVersion: 1.0.232](https://img.shields.io/badge/AppVersion-1.0.232-informational?style=flat-square)
+![AppVersion: 1.0.233](https://img.shields.io/badge/AppVersion-1.0.233-informational?style=flat-square)
 
 The Ankra Agent is a Kubernetes agent that enables seamless integration between your Kubernetes clusters and the Ankra platform, providing monitoring, management, and automation capabilities for your cloud-native infrastructure.
 
@@ -28,7 +28,7 @@ Ankra Agent is designed to run inside your Kubernetes cluster and acts as a brid
 ```bash
 helm upgrade \
   --install ankra-agent oci://registry.ankra.cloud/ankra/ankra-agent \
-  --version 1.0.232 \
+  --version 1.0.233 \
   --set config.token=your-ankra-token-here \
   --namespace=ankra \
   --create-namespace
