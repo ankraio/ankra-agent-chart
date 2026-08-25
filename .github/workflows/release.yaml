@@ -11,6 +11,7 @@ jobs:
       contents: write
       pages: write
       id-token: write
+      actions: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -77,8 +78,16 @@ jobs:
           fi
           rm -f *.tgz
           git add index.yaml
-          # No [skip ci]: this push must trigger the Deploy GitHub Pages
-          # workflow, which serves index.yaml to Artifact Hub. Nothing else
-          # triggers on an index.yaml-only push, so there is no loop.
           git commit -m "chore: update Helm repository index for ${TAG_NAME}"
           git push origin main
+
+      - name: Deploy GitHub Pages
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          set -euo pipefail
+          # Pushes made with GITHUB_TOKEN never trigger push workflows
+          # (GitHub recursion prevention), so the index push above cannot
+          # start the Pages deploy that serves index.yaml to Artifact Hub.
+          # workflow_dispatch is the sanctioned exception - fire it directly.
+          gh workflow run pages.yml --ref main
