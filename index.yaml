@@ -4,6 +4,89 @@ entries:
   - annotations:
       artifacthub.io/category: integration-delivery
       artifacthub.io/changes: |
+        - kind: changed
+          description: >-
+            Documentation now describes the Go agent. The agent was rewritten from
+            Python to Go, but the chart still advertised itself as optimized for a
+            Python runtime
+        - kind: fixed
+          description: >-
+            log_level no longer offers CRITICAL. The agent understands DEBUG, INFO,
+            WARNING (or WARN) and ERROR, and treats anything else as INFO, so
+            CRITICAL silently produced more logging than INFO rather than less
+        - kind: fixed
+          description: >-
+            Documented resource defaults now match values.yaml (100Mi request,
+            200Mi limit, no CPU limit) instead of CPU and memory figures the chart
+            never shipped
+        - kind: removed
+          description: >-
+            Dropped documentation for a startup probe and a pod_disruption_budget
+            value, neither of which this chart renders
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/displayName: Ankra Agent
+      artifacthub.io/images: |
+        - name: ankra-agent
+          image: registry.ankra.cloud/ankra/agent:stable
+          whitelisted: true
+          platforms:
+            - linux/amd64
+            - linux/arm64
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Website
+          url: https://ankra.io
+        - name: Platform
+          url: https://platform.ankra.app
+        - name: Documentation
+          url: https://docs.ankra.ai
+        - name: Support
+          url: https://github.com/ankraio/ankra-agent-chart/issues
+        - name: Source Code
+          url: https://github.com/ankraio/ankra-agent-chart
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+      artifacthub.io/signKey: |
+        fingerprint: B4B53D7407423346DA8D66481EE53FF7E0237237
+        url: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/main/pgp/ankra-helm-signing.asc
+      org.opencontainers.image.description: Kubernetes agent for seamless cluster
+        integration, monitoring, and automation with the Ankra platform
+      org.opencontainers.image.documentation: https://github.com/ankraio/ankra-agent-chart/blob/main/chart/README.md
+    apiVersion: v2
+    appVersion: 1.0.235
+    created: "2026-08-31T11:41:00.877717526Z"
+    description: Kubernetes agent for seamless cluster integration, monitoring, and
+      automation with the Ankra platform
+    digest: 3e3fa4589395ac7969a01016acbfd81ef2fe6891582ed15f1b6c73c0acda1183
+    home: https://ankra.io
+    icon: https://raw.githubusercontent.com/ankraio/ankra-agent-chart/refs/heads/main/.github/logo.jpeg
+    keywords:
+    - kubernetes
+    - agent
+    - monitoring
+    - automation
+    - management
+    - cloud-native
+    - devops
+    - observability
+    - cluster-management
+    - scheduler
+    - integration
+    maintainers:
+    - email: hello@ankra.io
+      name: Ankra Team
+      url: https://ankra.io
+    name: ankra-agent
+    sources:
+    - https://github.com/ankraio/ankra-agent-chart
+    type: application
+    urls:
+    - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.235/ankra-agent-1.0.235.tgz
+    version: 1.0.235
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/changes: |
         - kind: added
           description: Security & Compliance section in the chart README
         - kind: security
@@ -139,4 +222,4 @@ entries:
     urls:
     - https://github.com/ankraio/ankra-agent-chart/releases/download/v1.0.233/ankra-agent-1.0.233.tgz
     version: 1.0.233
-generated: "2026-08-16T22:07:11.374595407Z"
+generated: "2026-08-31T11:41:00.876961763Z"
